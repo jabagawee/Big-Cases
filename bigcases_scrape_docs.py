@@ -81,7 +81,8 @@ def getDocument(case, url):
         html = br.page_source
 
     if re.search('View All', html):
-        # Multiple documents on this entry. Try to get them all as a single document if you can
+        # Multiple documents on this entry.
+        # Try to get them all as a single document if you can.
         br.find_element_by_xpath("//input[@value='View All']").click()
         time.sleep(4)
         waittime += 10
@@ -125,7 +126,8 @@ def getDocument(case, url):
             print '   - now: ' + newfn
             shutil.move(files[0], newfn)
 
-            # source isn't publicly visible; description is public & free-form text.
+            # source isn't publicly visible;
+            # description is public & free-form text.
             dcdoc = dc.documents.upload(
                 newfn,
                 source='U.S. District Court via big_cases bot',
@@ -162,7 +164,8 @@ def getDocument(case, url):
             # Wait until the document is public
             obj = dc.documents.get(dcdoc.id)
             while obj.access != 'public':
-                print '   - Pausing for document to become public (%s) ' % obj.access
+                print '   - Pausing for document to become public (%s) ' % (
+                    obj.access)
                 time.sleep(5)
                 obj = dc.documents.get(dcdoc.id)
 

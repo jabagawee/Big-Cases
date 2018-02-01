@@ -12,7 +12,8 @@ class caseShare:
 
     VERBOSE = True
 
-    # List of  filing types that should not be tweeted (because they're routine and seldom interesting)
+    # List of filing types that should not be tweeted
+    # (because they're routine and seldom interesting)
     DONOTTWEET = [
         'Notice of Appearance', 'Pro Hac Vice', 'Appear Pro Hac Vice',
         'Appearance',
@@ -80,7 +81,8 @@ class caseShare:
         media_ids = []
         typ = DP2.search(d).group(1)
         if case['dcid'] is not None:
-            # Best case: We have the document on DC, and probably attached images
+            # Best case: We have the document on DC,
+            # and probably attached images
             link = case['document_location']
             nd = DP2.search(d).group(1) + '\n\n' + link
             doc = self.dc.documents.get(case['dcid'])
@@ -93,7 +95,8 @@ class caseShare:
             link = DP1.search(d).group(2)
             nd = DP1.search(d).group(1) + '\n\nDoc. on PACER: ' + link
         elif DP2.search(d):
-            # If there is no document, send a link to the PACER docket for the case
+            # If there is no document,
+            # send a link to the PACER docket for the case
             nd = DP2.search(d).group(1) + '\n\nPACER Docket: ' + case['link']
         else:
             nd = False

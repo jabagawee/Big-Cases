@@ -54,8 +54,8 @@ def processFeed(court):
             cn = case_number
             if cn is None:
                 cn = ''
-            print ' -> Adding to ' + court['id'] + ' ' + cn + ': %s' % item.description[:
-                                                                                        20]
+            print ' -> Adding to ' + court['id'] + ' ' + cn + ': %s' % (
+                item.description[:20])
             bigcase = checkBigCase(court['id'], case_number)
             pf = None
             db.run(
