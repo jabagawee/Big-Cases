@@ -195,12 +195,13 @@ class db:
         return
 
     def _logError(self, e='', sql=''):
-        msg = """ -------------------------------------------------------- 
-						{!s} - QUERY ERROR in {!s}
-						Error {!s} in query 
-						{!s}
-						 """.format(str(datetime.datetime.now()), __main__.__file__, e,
-                  sql).replace('\t', '')
+        msg = """ --------------------------------------------------------
+                  {!s} - QUERY ERROR in {!s}
+                  Error {!s} in query
+                  {!s}
+                  """.format(
+            str(datetime.datetime.now()), __main__.__file__, e, sql).replace(
+                '\t', '')
         self._log(msg)
         return
 
@@ -209,11 +210,11 @@ class db:
         return
 
     def _logSlowQuery(self):
-        msg = """ -------------------------------------------------------- 
-						{!s} - Slow query in {!s}
-						This query took {!s} seconds:
-						{!s} 
-						""".format(
+        msg = """ --------------------------------------------------------
+                  {!s} - Slow query in {!s}
+                  This query took {!s} seconds:
+                  {!s}
+                  """.format(
             str(datetime.datetime.now()), __main__.__file__, '{0:.2f}'.format(
                 self._query_time), self._last_query).replace('\t', '')
         self._log(msg)

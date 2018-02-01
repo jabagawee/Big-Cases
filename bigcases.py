@@ -41,11 +41,11 @@ class caseShare:
 
     def listNew(self):
         # List new filings in selected cases that haven't been tweeted yet
-        cases = self.db.getDict(""" SELECT * 
-						FROM court.pacer_raw
-						WHERE bigcase = 1
-						ORDER BY pid DESC
-						LIMIT 100 """)
+        cases = self.db.getDict(""" SELECT *
+                                    FROM court.pacer_raw
+                                    WHERE bigcase = 1
+                                    ORDER BY pid DESC
+                                    LIMIT 100 """)
         for case in cases:
             self.share(case)
             self.update(case)
@@ -54,8 +54,8 @@ class caseShare:
     def update(self, case):
         # Update a case after it's tweeted
         self.db.run(""" UPDATE court.pacer_raw
-				SET bigcase = 2
-				WHERE pid = %s """, (case['pid'], ))
+                        SET bigcase = 2
+                        WHERE pid = %s """, (case['pid'], ))
 
     def twitter_upload(self, image_list):
         # Upload images of first four pages

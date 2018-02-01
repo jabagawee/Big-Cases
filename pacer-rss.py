@@ -61,15 +61,15 @@ def processFeed(court):
             pf = None
             db.run(
                 """ INSERT INTO court.pacer_raw(court, preflag, case_number, title, guid, modified, pubdate, description, link, bigcase)
-									VALUES(%s, %s, %s, %s, %s, NOW(), %s, %s, %s, %s) """,
+                    VALUES(%s, %s, %s, %s, %s, NOW(), %s, %s, %s, %s) """,
                 (court['id'], pf, case_number, item.title[:253], item.guid,
                  item.published, item.description, item.link, bigcase))
 
 
 def checkGuid(guid):
     c = db.getOne(""" SELECT COUNT(*) AS c
-							FROM court.pacer_raw
-							WHERE guid = %s """, (guid, ))
+                      FROM court.pacer_raw
+                      WHERE guid = %s """, (guid, ))
     if c > 0:
         return True
     else:

@@ -144,14 +144,14 @@ def getDocument(case, url):
             # This means the document is processing - do not post it
             # Flag reverts to 1 after document upload is complete
             db.run(""" UPDATE court.pacer_raw
-					SET modified = modified,
-						scraped = 1,
-						scraped_time = NOW(),
-						dcid = %s,
-						document_location = %s,
-						price = %s,
-						bigcase = 3
-					WHERE pid = %s """, (
+                       SET modified = modified,
+                           scraped = 1,
+                           scraped_time = NOW(),
+                           dcid = %s,
+                           document_location = %s,
+                           price = %s,
+                           bigcase = 3
+                       WHERE pid = %s """, (
                 dcdoc.id,
                 str(dcdoc.published_url),
                 price,
@@ -171,8 +171,8 @@ def getDocument(case, url):
 
             # Re-flag the docket entry in the database as ready to post
             db.run(""" UPDATE court.pacer_raw
-					SET bigcase = 1
-					WHERE pid = %s """, (pid, ))
+                       SET bigcase = 1
+                       WHERE pid = %s """, (pid, ))
 
     return
 
@@ -184,12 +184,12 @@ if __name__ == '__main__':
     # Now get the latest relevant documents
 
     cases = db.getDict(""" SELECT *
-						FROM court.pacer_raw
-						WHERE bigcase = 1
-							AND description LIKE %s
-							AND scraped = 0
-						ORDER BY pid DESC
-						LIMIT %s """, (
+                           FROM court.pacer_raw
+                           WHERE bigcase = 1
+                                 AND description LIKE %s
+                                 AND scraped = 0
+                           ORDER BY pid DESC
+                           LIMIT %s """, (
         '%http%',
         settings.max_files_to_scrape,
     ))
