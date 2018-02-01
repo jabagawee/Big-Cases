@@ -27,7 +27,6 @@ import urlparse
 
 from bigcases_settings import settings
 
-
 API_BASE = 'https://www.courtlistener.com/api/rest/v3/'
 TIMEOUTS = (60, 300)  # 1 minute connect timeout, 5 min. read timeout
 VERBOSE = 1
@@ -48,17 +47,15 @@ class RecapUpload(object):
     def PACER_Court_to_CL(self, PACER_court):
         # An unfortunate design decision was made in the past.
         PACER_TO_CL_IDS = {
-            'azb': 'arb',         # Arizona Bankruptcy Court
-            'cofc': 'uscfc',      # Court of Federal Claims
-            'neb': 'nebraskab',   # Nebraska Bankruptcy
+            'azb': 'arb',  # Arizona Bankruptcy Court
+            'cofc': 'uscfc',  # Court of Federal Claims
+            'neb': 'nebraskab',  # Nebraska Bankruptcy
             'nysb-mega': 'nysb',  # Remove the mega thing
         }
 
         return PACER_TO_CL_IDS.get(PACER_court, PACER_court)
 
-    def __init__(self, filename,
-                 docket_number, docket_caption,
-                 published_date,
+    def __init__(self, filename, docket_number, docket_caption, published_date,
                  item_description):
         """Upload a document to the RECAP archive.
 
@@ -92,16 +89,16 @@ class RecapUpload(object):
 
         h = HTMLParser()
         itemDecoded = h.unescape(item_description)
-# BEFORE unescape() call:
-# [Motion For Order] (<a href="https://ecf.dcd.uscourts.gov/
-# doc1/04506366063?caseid=190182&amp;de_seq_num=369">94</a>)
-# AFTER unescape() call:
-# [Motion For Order] (<a href="https://ecf.dcd.uscourts.gov/
-# doc1/04506366063?caseid=190182&de_seq_num=369">94</a>)
+        # BEFORE unescape() call:
+        # [Motion For Order] (<a href="https://ecf.dcd.uscourts.gov/
+        # doc1/04506366063?caseid=190182&amp;de_seq_num=369">94</a>)
+        # AFTER unescape() call:
+        # [Motion For Order] (<a href="https://ecf.dcd.uscourts.gov/
+        # doc1/04506366063?caseid=190182&de_seq_num=369">94</a>)
 
-# NOTE that Appellate takes this form:
-# [Order Filed (CLERK)] (<a href='https://ecf.cadc.uscourts.gov/
-# docs1/01207988480'>Document</a>)
+        # NOTE that Appellate takes this form:
+        # [Order Filed (CLERK)] (<a href='https://ecf.cadc.uscourts.gov/
+        # docs1/01207988480'>Document</a>)
 
         match = re.search(r'''(?x)
             \[(?P<text>[^\]]*)\]
@@ -140,7 +137,7 @@ class RecapUpload(object):
             print "Checking RECAP for case %s in %s" % (pacer_case_id, court)
         # /dockets/?pacer_case_id=189311&court=mad
         r = requests.get(
-            url=API_BASE+'dockets/',
+            url=API_BASE + 'dockets/',
             headers={'Authorization': 'Token %s' % settings.recap_token},
             params={'court': court,
                     'pacer_case_id': pacer_case_id},
@@ -179,7 +176,7 @@ class RecapUpload(object):
             # Because in some corner cases there is a Docket Entry
             # object without a RECAP docket (...)
             r = requests.get(
-                url=API_BASE+'docket-entries/',
+                url=API_BASE + 'docket-entries/',
                 headers={'Authorization': 'Token %s' % settings.recap_token},
                 params={
                     'docket': cl_docket_id,
@@ -238,7 +235,7 @@ class RecapUpload(object):
 
             files = {'filepath_local': ('filepath_local', html, 'text/html')}
             r = requests.post(
-                url=API_BASE+'recap/',
+                url=API_BASE + 'recap/',
                 headers={'Authorization': 'Token %s' % settings.recap_token},
                 data={
                     'upload_type': _UploadType.DOCKET,
@@ -259,7 +256,7 @@ class RecapUpload(object):
         # #5. We upload the PDF.
         files = {'filepath_local': open(filename, 'rb')}
         r = requests.post(
-            url=API_BASE+'recap/',
+            url=API_BASE + 'recap/',
             headers={'Authorization': 'Token %s' % settings.recap_token},
             data={
                 'upload_type': _UploadType.PDF,
