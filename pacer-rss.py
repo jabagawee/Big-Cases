@@ -3,7 +3,6 @@ import multiprocessing
 import feedparser
 from io import BytesIO
 import requests
-import sys
 import dbconnect
 import bigcases_list
 from pacer_rss_feeds import courts
