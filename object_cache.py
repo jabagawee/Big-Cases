@@ -41,7 +41,7 @@ class objectCache:
                     return False
             else:
                 return False
-        except:
+        except Exception:
             return False
 
     def content(self):

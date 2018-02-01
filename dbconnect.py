@@ -233,7 +233,7 @@ class db:
     def testConnection(self):
         try:
             self._db.execute("SELECT 1")
-        except:
+        except Exception:
             self._connect()
 
     def lastQuery(self):

@@ -67,7 +67,7 @@ class caseShare:
                 uploadable = BytesIO(res.content)
                 response = self.tw.upload_media(media=uploadable)
                 media_ids.append(response['media_id'])
-            except:
+            except Exception:
                 pass
         return media_ids
 
