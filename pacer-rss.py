@@ -21,10 +21,10 @@ db = dbconnect.db(
 
 
 def bigCaseList():
-    l = []
+    big_cases = []
     for case in bigcases_list.cases:
-        l.append(case['court'] + case['case_number'])
-    return l
+        big_cases.append(case['court'] + case['case_number'])
+    return big_cases
 
 
 def checkBigCase(court, case_number):
