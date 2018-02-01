@@ -1,4 +1,4 @@
-### Abstract the MySQLdb layer
+# Abstract the MySQLdb layer
 
 import MySQLdb
 import object_cache
