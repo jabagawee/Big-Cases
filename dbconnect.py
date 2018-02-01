@@ -31,7 +31,7 @@ class db:
     _dbpass = ''
 
     def __init__(self, host=None, user=None, pwd=None, port=3306):
-        _is_connected = False
+        self._is_connected = False
         self._dbhost = host
         self._port = port
         self._dbuser = user

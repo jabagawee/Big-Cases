@@ -125,8 +125,6 @@ def getDocument(case, url):
             print '   - now: ' + newfn
             shutil.move(files[0], newfn)
 
-            dcid = None
-
             # source isn't publicly visible; description is public & free-form text.
             dcdoc = dc.documents.upload(
                 newfn,
@@ -158,8 +156,8 @@ def getDocument(case, url):
             ))
 
             # While DocumentCloud processes the document, upload it to RECAP
-            recap = RecapUpload(newfn, case['case_number'], case['title'],
-                                case['pubdate'], case['description'])
+            RecapUpload(newfn, case['case_number'], case['title'],
+                        case['pubdate'], case['description'])
 
             # Wait until the document is public
             obj = dc.documents.get(dcdoc.id)
